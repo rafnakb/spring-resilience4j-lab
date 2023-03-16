@@ -1,0 +1,57 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: service-a
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    enabled-by-default: false # coletores desativados por padrao
+    web:
+      exposure:
+        include: 'health, metrics, prometheus'
+  endpoint:
+    health:
+      enabled: true
+      show-details: ALWAYS
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      serviceA:
+        registerHealthIndicator: true # Registrar indicador de saude
+        minimumNumberOfCalls: 4 # numero minimo de chamadas falhas para open
+        slidingWindowSize: 8 # ultimas chamadas que o CB ira memorizar
+        permittedNumberOfCallsInHalfOpenState: 3 # quantidade de falhas em estado HALF-OPEN para o recálculo da taxa de falhas
+        automaticTransitionFromOpenToHalfOpenEnabled: true # Transicaoo automática de Aberto para Meio Aberto
+        waitDurationInOpenState: 5s # o tempo que sera aguardado para transicao do estado OPEN para HALF-OPEN
+        failureRateThreshold: 50 # limite de taxa de falhas (%) percentual de erros para a transição para o estado OPEN
+        eventConsumerBufferSize: 100 # define a quantidade de mensagens que irao aparecer nos eventos do CB dentro do Actuator
+        slidingWindowType: COUNT_BASED # define tipo de padrão: baseado em tempo ou baseado em contagem
+
+  retry:
+    instances:
+      serviceA:
+        registerHealthIndicator: true # Registrar indicador de saude
+        maxRetryAttempts: 5 # numero maximo de tentativas novas
+        waitDuration: 2s # tempo de espera entre as tentativas
+
+  ratelimiter:
+    instances:
+      serviceA:
+        registerHealthIndicator: false
+        limitForPeriod: 6 # numero de chamadas permitidas durante um periodo estabelecido
+        limitRefreshPeriod: 10s # periodo de atualizacao de limite
+        timeoutDuration: 5s # tempo de espera padrao que um thread espera por uma permissao
+
+  metrics:
+    legacy:
+      enabled: true
