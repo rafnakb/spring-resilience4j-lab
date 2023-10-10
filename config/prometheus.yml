@@ -8,3 +8,10 @@ scrape_configs:
       - targets: ["host.docker.internal:8091"]
         labels:
           application: "api-service-a"
+
+  - job_name: "api-service-b-job"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: [ "host.docker.internal:8092" ]
+        labels:
+          application: "api-service-b"

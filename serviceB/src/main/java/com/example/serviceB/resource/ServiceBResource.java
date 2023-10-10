@@ -10,7 +10,7 @@ public class ServiceBResource {
 
     @GetMapping()
     public String serviceB(){
-        return "Serviço B foi chamado pelo Serviço A";
+        return "Welcome to service B";
     }
 
 }
