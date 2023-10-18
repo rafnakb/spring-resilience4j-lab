@@ -23,8 +23,13 @@ public class ServiceAResource {
 
     int retry = 1;
 
-    @GetMapping("/call")
+    @GetMapping()
     public String serviceA() {
+        return "Welcome to service A";
+    }
+
+    @GetMapping("/call-service-b")
+    public String callServiceB() {
         return restTemplate.getForObject(
                 "http://localhost:8092/service-b",
                 String.class
@@ -41,7 +46,7 @@ public class ServiceAResource {
     }
 
     public String fallbackCircuitBreaker(Exception e) {
-        return "Fallback do Serviço A. Ao persistir a falha acionar Circuit Breaker.";
+        return "Fallback do Serviço A, ao persistir o Serviço B.";
     }
 
     @GetMapping("/retry")

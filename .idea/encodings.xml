@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/serviceA/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/serviceA/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/serviceA/src/main/resources/application.yml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/serviceB/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/serviceB/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/serviceC/src/main/java" charset="UTF-8" />
